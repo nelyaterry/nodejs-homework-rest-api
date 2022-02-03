@@ -7,8 +7,9 @@ const login = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
-    if (!user || !user.comparePassword(password)) {
-      throw new Unauthorized("Email or password is wrong");
+
+    if (!user || !user.comparePassword(password) || !user.veryfi) {
+      throw new Unauthorized("Email or password is wrong or not veryfi");
     }
 
     const payload = {
